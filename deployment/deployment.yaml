@@ -28,8 +28,10 @@ spec:
             secretKeyRef:
               name: idfm-secret
               key: token
-        - name: UV_CACHE_DIR      
-          value: "/tmp/.uv_cache" # /tmp est toujours autorisé en écriture
+        - name: UV_NO_CACHE
+          value: "true"
+        - name: UV_INSTALL_DIR
+          value: "/tmp"
         resources:
           limits:
             cpu: 500m
