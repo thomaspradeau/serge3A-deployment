@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: serge3a-ingress
+  namespace: user-tpradeau
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+  - host: serge3a.user.lab.sspcloud.fr # À vérifier selon le format exact du cours
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: serge3a-service
+            port:
+              number: 80

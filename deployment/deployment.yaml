@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: serge3a
+  namespace: user-tpradeau
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: serge3a
+  template:
+    metadata:
+      labels:
+        app: serge3a
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+      containers:
+      - name: serge3a
+        image: tpradeau/serge3a:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5003
+        env:
+        - name: TOKEN_IDFM
+          valueFrom:
+            secretKeyRef:
+              name: idfm-secret
+              key: token
+        # On copie leurs limites de ressources pour être "pro"
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 256Mi
+        # Liveness/Readiness : Kubernetes vérifie que Streamlit répond bien
+        livenessProbe:
+          httpGet:
+            path: /_stcore/health
+            port: 5003
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /_stcore/health
+            port: 5003
+          initialDelaySeconds: 5
+          periodSeconds: 5
