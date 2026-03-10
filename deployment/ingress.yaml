@@ -2,21 +2,24 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: serge3a-ingress
-  namespace: user-tpradeau
   annotations:
-    kubernetes.io/ingress.class: nginx
+    # On ajoute ces deux lignes pour corriger ton erreur "No available server"
+    # car Streamlit a besoin de maintenir une connexion ouverte (Websocket)
     nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
-    nginx.ingress.kubernetes.io/websocket-services: "serge3a-service"
 spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - serge3a-tpradeau.lab.sspcloud.fr 
   rules:
-  - host: serge3a.user.lab.sspcloud.fr # À vérifier selon le format exact du cours
+  - host: serge3a-tpradeau.lab.sspcloud.fr 
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: serge3a-service
+            name: serge3a-service # Vérifie que c'est bien le nom dans service.yaml
             port:
               number: 80
