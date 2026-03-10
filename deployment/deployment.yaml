@@ -13,9 +13,7 @@ spec:
       labels:
         app: serge3a
     spec:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
+      # J'ai supprimé ici le securityContext (runAsNonRoot et runAsUser)
       containers:
       - name: serge3a
         image: tpradeau/serge3a:latest
@@ -28,10 +26,8 @@ spec:
             secretKeyRef:
               name: idfm-secret
               key: token
-        - name: UV_NO_CACHE
-          value: "true"
-        - name: UV_INSTALL_DIR
-          value: "/tmp"
+        - name: UV_CACHE_DIR      
+          value: "/tmp/.uv_cache" 
         resources:
           limits:
             cpu: 500m
@@ -39,7 +35,6 @@ spec:
           requests:
             cpu: 100m
             memory: 256Mi
-        # Liveness/Readiness : Kubernetes vérifie que Streamlit répond bien
         livenessProbe:
           httpGet:
             path: /_stcore/health
