@@ -28,7 +28,8 @@ spec:
             secretKeyRef:
               name: idfm-secret
               key: token
-        # On copie leurs limites de ressources pour être "pro"
+        - name: UV_CACHE_DIR      
+          value: "/tmp/.uv_cache" # /tmp est toujours autorisé en écriture
         resources:
           limits:
             cpu: 500m
