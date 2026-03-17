@@ -26,8 +26,6 @@ spec:
             secretKeyRef:
               name: idfm-secret
               key: token
-        - name: BUCKET
-          value: "tpradeau"
         - name: UV_CACHE_DIR      
           value: "/tmp/.uv_cache" 
         resources:
