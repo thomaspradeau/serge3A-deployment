@@ -16,7 +16,7 @@ spec:
       # J'ai supprimé ici le securityContext (runAsNonRoot et runAsUser)
       containers:
       - name: serge3a
-        image: tpradeau/serge3a:a377a872528edad2215a39ab18ad8e705ff6f10b
+        image: tpradeau/serge3a:0f8372b4ccc223e68f2d5d0e9b1e8502c99f5590
         imagePullPolicy: Always
         ports:
         - containerPort: 5003
